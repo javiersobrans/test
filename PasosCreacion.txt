@@ -2,13 +2,9 @@
 1.- Crear
 ----------------------------------------------------------------------------------------------------------
 
-1/ proyecto empty mvc 4.5.1
-2/ nuget add bootstrap
-3/ add controller home
-
-
-
-
+1.1/ proyecto empty mvc 4.5.1
+1.2/ nuget add bootstrap
+1.3/ add controller home
 
 
 2.- Probar
@@ -17,3 +13,29 @@
 _form parcial
 _owin
 _Irepository
+
+
+
+3.- Codigo
+----------------------------------------------------------------------------------------------------------
+
+RenderSection 
+
+ List<Cliente> lista = new List<Cliente>();
+
+            using (var db = new LiteDatabase(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/OneData.db")))
+            {
+
+                var clientes = db.GetCollection<Cliente>("clientes");
+                var results = clientes.FindAll();
+                foreach (Cliente cli in results)
+                {
+                    lista.Add(cli);
+                }
+            }
+
+            return View(lista);
+
+
+
+
