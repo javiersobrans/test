@@ -1,0 +1,4 @@
+1/ proyecto empty mvc 4.5.1
+2/ nuget add bootstrap
+3/ add controller home
+
