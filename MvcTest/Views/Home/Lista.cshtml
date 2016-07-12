@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MvcTest.Models.Cliente>
+﻿@model PagedList.IPagedList<MvcTest.Models.Cliente>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Lista";
@@ -12,16 +13,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nombre)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Telefono)
+            @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Telefono)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Activo)
+            @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Activo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Creado)
+            @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Creado)
         </th>
         <th></th>
     </tr>
@@ -49,3 +50,8 @@
 }
 
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount ( Total: @Model.TotalItemCount ) 
+
+@Html.PagedListPager(Model, page => Url.Action("Lista",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcTest.Models;
+using PagedList;
 
 namespace MvcTest.Controllers
 {
@@ -16,24 +17,24 @@ namespace MvcTest.Controllers
             return View();
         }
 
-        public ActionResult Lista()
+        public ActionResult Lista(int? page)
         {
 
             List<Cliente> lista = new List<Cliente>();
 
             using (var db = new LiteDatabase(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/OneData.db")))
             {
-
                 var clientes = db.GetCollection<Cliente>("clientes");
-                var results = clientes.FindAll();
-                foreach (Cliente cli in results)
-                {
-                    lista.Add(cli);
-                }
+                lista = clientes.FindAll().ToList();
             }
 
-            return View(lista);
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+
+            return View(lista.ToPagedList(pageNumber, pageSize));
+
         }
+
 
 
     }
